@@ -1,0 +1,27 @@
+{
+    "name": "orixo/agency-platform",
+    "description": "Orixo — Creative Digital Solutions & Innovation Studio Full-Stack Platform",
+    "type": "project",
+    "require": {
+        "php": ">=8.2",
+        "ext-pdo": "*",
+        "ext-pdo_mysql": "*",
+        "ext-fileinfo": "*",
+        "ext-json": "*",
+        "phpmailer/phpmailer": "^6.9",
+        "dompdf/dompdf": "^3.0",
+        "vlucas/phpdotenv": "^5.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Orixo\\": "app/"
+        },
+        "files": [
+            "app/Helpers/functions.php"
+        ]
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    }
+}

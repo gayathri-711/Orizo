@@ -1,0 +1,16 @@
+# Orixo — Development Progress & Architecture Log
+
+**Concept:** Creative Digital Solutions & Innovation Studio  
+**Brand Palette:** Editorial Vermilion (`#E04F26`, `#C23D18`, `#FDF0EC`, `#1F3A3D`, `#18181B`, `#F7F5F0`)  
+**Stack:** HTML5, CSS3, JS, jQuery, Bootstrap 5, Font Awesome, Native PHP 8.2+, MySQL 8.0+, PDO, PHPMailer, Dompdf
+
+## Completed Implementation Phases
+
+- **Phase 1 — Foundation:** Directory hierarchy, `.env.example`, `composer.json`, config files, PDO database layer, front controllers (`index.php`, `portal.php`, `admin.php`, `api.php`), `Router`, `Validator`, `CsrfMiddleware`, live DB `AuthMiddleware` (`token_version`), `RoleMiddleware`, `ProjectAccessMiddleware`, `RateLimitMiddleware`, and ordered MySQL migrations (`001`–`003`) + idempotent `SeedRunner`.
+- **Phase 2 — Public Digital Agency Website:** All editorial public views (`home`, `about`, `services`, `service_detail`, `portfolio`, `portfolio_detail`, `case_studies`, `case_study_detail`, `industries`, `industry_detail`, `our_process`, `technologies`, `team`, `contact`, `project_inquiry`, `login`, `activate_account`, `forgot_password`, `reset_password`, `legal`, `404`, `403`, `maintenance`) with AJAX contact/inquiry intake and no open public self-registration.
+- **Phase 3 — Admin Foundation & Restricted Team Workspace:** Operational dashboard KPIs, Inquiry & Contact Inbox with attachment downloads and role-safe conversion (reusing `client` accounts only, blocking `admin`/`team_member` email conflicts), Client Management with resend activation, Project Management, Team Management, Milestones, Tasks + transactional `ProgressService`, and scoped Team Workspace views.
+- **Phase 4 — Client Portal:** Isolated Client Dashboard, My Projects, Project Overview with `Auto-calculated` vs `Manual Override` progress clarity, Milestones Timeline, Tasks summary, Published Deliverables, Agency Shared vs Client Uploads document areas, Threaded Project Messaging with attachments, Notifications, and Profile/Security.
+- **Phase 5 — Finance (INR Default & Multi-Currency Preserved):** Draft/Issued/Partially Paid/Paid/Cancelled invoices with DB-enforced `(project_id, client_id)` composite FK, Dompdf PDF rendering (`₹1,50,000.00` Indian grouping for INR), `FOR UPDATE` transactional manual payment recording, immutable payment voiding with reason, and dynamic overdue evaluation.
+- **Phase 6 — Email Automation & Private Files:** Persist-first `email_queue_logs` with idempotency keys, lease recovery, 5m/15m retry backoff (max 3 attempts), 14 seeded transactional templates, `bin/process_email_queue.php` cron worker + Admin fallback trigger, private non-webroot file vault, UUID filenames, `finfo_file()` MIME validation, and reference-safe orphan cleanup (`bin/cleanup_orphan_files.php`).
+- **Phase 7 — CMS & System Settings:** Dynamic CRUD for Services, Service Categories, Portfolio, Portfolio Categories, Case Studies, Industries, Technologies, Testimonials, Editable CMS Pages, Users & Roles (`token_version` invalidation), Website/Finance/Email Settings, and Activity Audit Logs.
+- **Phase 8 — Testing & Documentation:** `tests/smoke_and_security_tests.php`, `public/robots.txt`, `public/sitemap.xml`, and `docs/SETUP_AND_DEPLOYMENT.md`.

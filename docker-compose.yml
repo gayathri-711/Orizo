@@ -1,0 +1,50 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: orixo_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: orixo_db
+      MYSQL_USER: orixo
+      MYSQL_PASSWORD: orixo_dev_password
+      MYSQL_ROOT_PASSWORD: orixo_root_password
+    ports:
+      - "3307:3306"
+    volumes:
+      - orixo_mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-porixo_root_password"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: orixo_app
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www/html
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: orixo_db
+      DB_USERNAME: orixo
+      DB_PASSWORD: orixo_dev_password
+
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: orixo_tunnel
+    restart: unless-stopped
+    depends_on:
+      - app
+    command: tunnel --no-autoupdate --url http://app:80
+
+volumes:
+  orixo_mysql_data:

@@ -1,0 +1,15 @@
+RewriteEngine On
+
+# Block hidden files & sensitive extensions
+RewriteRule (^|/)\. - [F,L]
+
+# Serve existing static files directly
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Route by application boundary
+RewriteRule ^api/ api.php [L,QSA]
+RewriteRule ^portal(/.*)?$ portal.php [L,QSA]
+RewriteRule ^admin(/.*)?$ admin.php [L,QSA]
+RewriteRule ^ index.php [L,QSA]

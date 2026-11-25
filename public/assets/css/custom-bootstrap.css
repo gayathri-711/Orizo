@@ -1,0 +1,96 @@
+body {
+  font-family: var(--font-body);
+  color: var(--orixo-ink);
+  background-color: var(--orixo-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6, .font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.025em;
+  color: var(--orixo-ink);
+}
+
+.font-mono-code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.btn-orixo {
+  background-color: var(--orixo-accent);
+  border-color: var(--orixo-accent);
+  color: #FFFFFF;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 1.35rem;
+  transition: all var(--transition-base);
+}
+.btn-orixo:hover, .btn-orixo:focus {
+  background-color: var(--orixo-accent-hover);
+  border-color: var(--orixo-accent-hover);
+  color: #FFFFFF;
+}
+
+.btn-orixo-outline {
+  border: 1px solid var(--orixo-ink);
+  color: var(--orixo-ink);
+  background: transparent;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 1.35rem;
+  transition: all var(--transition-base);
+}
+.btn-orixo-outline:hover {
+  background-color: var(--orixo-ink);
+  color: #FFFFFF;
+}
+
+.form-control, .form-select {
+  border-color: #D4D2CC;
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 0.9rem;
+  font-size: 0.95rem;
+}
+.form-control:focus, .form-select:focus {
+  border-color: var(--orixo-accent);
+  box-shadow: 0 0 0 0.2rem rgba(224, 79, 38, 0.16);
+}
+
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+.status-success { background: var(--status-success-bg); color: var(--status-success-fg); }
+.status-info    { background: var(--status-info-bg);    color: var(--status-info-fg); }
+.status-warning { background: var(--status-warning-bg); color: var(--status-warning-fg); }
+.status-danger  { background: var(--status-danger-bg);  color: var(--status-danger-fg); }
+.status-neutral { background: var(--status-neutral-bg); color: var(--status-neutral-fg); }
+
+.progress {
+  height: 8px;
+  background-color: #E7E5DF;
+  border-radius: 999px;
+}
+.progress-bar-orixo {
+  background-color: var(--orixo-accent);
+}
+
+#orixo-toast-container {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: 1090;
+  max-width: 360px;
+}
