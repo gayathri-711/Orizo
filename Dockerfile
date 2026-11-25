@@ -26,7 +26,8 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-av
 WORKDIR /var/www/html
 COPY . /var/www/html
 
-RUN mkdir -p storage/private/inquiries storage/private/projects storage/private/deliverables storage/private/messages storage/private/invoices storage/logs public/uploads/cms \
+RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader \
+    && mkdir -p storage/private/inquiries storage/private/projects storage/private/deliverables storage/private/messages storage/private/invoices storage/logs public/uploads/cms \
     && chown -R www-data:www-data storage public/uploads
 
 COPY docker/entrypoint.sh /usr/local/bin/orixo-entrypoint.sh

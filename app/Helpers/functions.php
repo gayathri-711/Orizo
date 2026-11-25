@@ -4,6 +4,18 @@ declare(strict_types=1);
 use Orixo\Bootstrap\App;
 use Orixo\Bootstrap\Database;
 
+function env_val(string $key, mixed $default = null): mixed
+{
+    if (array_key_exists($key, $_ENV) && $_ENV[$key] !== '') {
+        return $_ENV[$key];
+    }
+    if (array_key_exists($key, $_SERVER) && $_SERVER[$key] !== '') {
+        return $_SERVER[$key];
+    }
+    $val = getenv($key);
+    return ($val !== false && $val !== '') ? $val : $default;
+}
+
 function e(?string $value): string
 {
     return htmlspecialchars((string) $value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');

@@ -4,9 +4,9 @@ declare(strict_types=1);
 return [
     'private_root' => dirname(__DIR__) . '/storage/private',
     'public_cms_root' => dirname(__DIR__) . '/public/uploads/cms',
-    'max_inquiry_bytes' => ((int) ($_ENV['MAX_INQUIRY_UPLOAD_MB'] ?? 10)) * 1024 * 1024,
-    'max_project_bytes' => ((int) ($_ENV['MAX_PROJECT_UPLOAD_MB'] ?? 25)) * 1024 * 1024,
-    'max_cms_bytes' => ((int) ($_ENV['MAX_CMS_UPLOAD_MB'] ?? 5)) * 1024 * 1024,
+    'max_inquiry_bytes' => ((int) env_val('MAX_INQUIRY_UPLOAD_MB', 10)) * 1024 * 1024,
+    'max_project_bytes' => ((int) env_val('MAX_PROJECT_UPLOAD_MB', 25)) * 1024 * 1024,
+    'max_cms_bytes' => ((int) env_val('MAX_CMS_UPLOAD_MB', 5)) * 1024 * 1024,
     'allowed_private_mimes' => [
         'pdf'  => ['application/pdf'],
         'png'  => ['image/png'],
