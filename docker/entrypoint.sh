@@ -47,4 +47,9 @@ php bin/migrate.php --seed
 
 chown -R www-data:www-data storage public/uploads
 
+# Guarantee only a single Apache MPM (mpm_prefork) is enabled to prevent AH00534
+rm -f /etc/apache2/mods-enabled/mpm_event.* /etc/apache2/mods-enabled/mpm_worker.*
+a2dismod mpm_event mpm_worker >/dev/null 2>&1 || true
+a2enmod mpm_prefork >/dev/null 2>&1 || true
+
 exec "$@"
