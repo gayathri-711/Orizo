@@ -24,21 +24,17 @@ chown -R www-data:www-data storage public/uploads
 DB_WAIT_HOST="${DB_HOST:-${MYSQLHOST:-db}}"
 DB_WAIT_PORT="${DB_PORT:-${MYSQLPORT:-3306}}"
 DB_WAIT_NAME="${DB_DATABASE:-${MYSQLDATABASE:-orixo_db}}"
-DB_WAIT_USER="${DB_USERNAME:-${MYSQLUSER:-orixo}}"
-DB_WAIT_PASS="${DB_PASSWORD:-${MYSQLPASSWORD:-orixo_dev_password}}"
 
 echo "[Orixo] Waiting for MySQL (${DB_WAIT_HOST}:${DB_WAIT_PORT}/${DB_WAIT_NAME})..."
 until php -r '
+require "/var/www/html/app/Bootstrap/App.php";
 try {
-    new PDO(
-        "mysql:host=" . $argv[1] . ";port=" . $argv[2] . ";dbname=" . $argv[3],
-        $argv[4],
-        $argv[5]
-    );
+    \Orixo\Bootstrap\App::bootCli();
+    \Orixo\Bootstrap\Database::connection();
     exit(0);
 } catch (Throwable $e) {
     exit(1);
-}' "$DB_WAIT_HOST" "$DB_WAIT_PORT" "$DB_WAIT_NAME" "$DB_WAIT_USER" "$DB_WAIT_PASS" 2>/dev/null; do
+}' 2>/dev/null; do
   sleep 2
 done
 

@@ -28,12 +28,25 @@ final class Database
             $cfg['charset']
         );
 
+        $options = [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES => false,
+        ];
+
+        $sslCa = trim((string) ($cfg['ssl_ca'] ?? ''));
+        if ($sslCa === 'system') {
+            $sslCa = '/etc/ssl/certs/ca-certificates.crt';
+        }
+        if ($sslCa !== '') {
+            $options[PDO::MYSQL_ATTR_SSL_CA] = $sslCa;
+            if (defined('PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT')) {
+                $options[PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT] = (bool) ($cfg['ssl_verify'] ?? true);
+            }
+        }
+
         try {
-            self::$instance = new PDO($dsn, $cfg['username'], $cfg['password'], [
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                PDO::ATTR_EMULATE_PREPARES => false,
-            ]);
+            self::$instance = new PDO($dsn, $cfg['username'], $cfg['password'], $options);
         } catch (PDOException $e) {
             App::logError('Database connection failed: ' . $e->getMessage(), 'app');
             throw new \RuntimeException('Database connection error.');
